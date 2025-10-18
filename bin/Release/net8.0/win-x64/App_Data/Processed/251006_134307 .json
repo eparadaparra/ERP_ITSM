@@ -1,0 +1,11 @@
+{
+  "@odata.context": "https://itsm.execon.mx/HEAT/api/odata/$metadata#accounts(RecId,CustID,Name)",
+  "@odata.count": 1,
+  "value": [
+    {
+      "RecId": "FB42A0B0F3BA416CACF8ABB718ECC5F7",
+      "Name": "CADENA COMERCIAL OXXO",
+      "CustID": "0086"
+    }
+  ]
+}

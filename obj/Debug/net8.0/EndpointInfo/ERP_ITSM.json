@@ -1,0 +1,676 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "ERP_ITSM",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/ERP/Account": {
+      "post": {
+        "tags": [
+          "ERP"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetAccountRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetAccountRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetAccountRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ERP/Location": {
+      "post": {
+        "tags": [
+          "ERP"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetLocationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetLocationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetLocationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ERP/Release": {
+      "post": {
+        "tags": [
+          "ERP"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetTicketRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetTicketRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetTicketRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ERP/ExternalContact": {
+      "post": {
+        "tags": [
+          "ERP"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetExternalContactRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetExternalContactRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetExternalContactRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ERP/TipoMaterial": {
+      "post": {
+        "tags": [
+          "ERP"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoMaterialRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoMaterialRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoMaterialRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ERP/Service": {
+      "post": {
+        "tags": [
+          "ERP"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetServiceRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetServiceRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetServiceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ERP/NuevoRelease": {
+      "post": {
+        "tags": [
+          "ERP"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReleaseRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReleaseRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReleaseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ERP/NuevoSitio": {
+      "post": {
+        "tags": [
+          "ERP"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ERP/NuevoContrato": {
+      "post": {
+        "tags": [
+          "ERP"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContratoRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContratoRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContratoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ERP/NuevoCI": {
+      "post": {
+        "tags": [
+          "ERP"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CIRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CIRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CIRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ERP/GetsLinks": {
+      "post": {
+        "tags": [
+          "ERP"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjParentLink"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjParentLink"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjParentLink"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ERP/LinkToRelease": {
+      "post": {
+        "tags": [
+          "ERP"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LinkReleaseRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LinkReleaseRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LinkReleaseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CIRequest": {
+        "type": "object",
+        "properties": {
+          "CIType": {
+            "type": "string",
+            "nullable": true
+          },
+          "ivnt_AssetSubtype": {
+            "type": "string",
+            "nullable": true
+          },
+          "ivnt_ParentAssetTypeDisplay": {
+            "type": "string",
+            "nullable": true
+          },
+          "CustID": {
+            "type": "string",
+            "nullable": true
+          },
+          "ContractID": {
+            "type": "string",
+            "nullable": true
+          },
+          "Servicio": {
+            "type": "string",
+            "nullable": true
+          },
+          "Caracteristica": {
+            "type": "string",
+            "nullable": true
+          },
+          "SitioId": {
+            "type": "string",
+            "nullable": true
+          },
+          "Manufid": {
+            "type": "string",
+            "nullable": true
+          },
+          "Modelid": {
+            "type": "string",
+            "nullable": true
+          },
+          "SerialNbr": {
+            "type": "string",
+            "nullable": true
+          },
+          "User1": {
+            "type": "string",
+            "nullable": true
+          },
+          "Crtd_Prog": {
+            "type": "string",
+            "nullable": true
+          },
+          "Crtd_DateTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "Crtd_User": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContratoRequest": {
+        "required": [
+          "AgreementTypeID",
+          "ContractId",
+          "custID",
+          "SiteId"
+        ],
+        "type": "object",
+        "properties": {
+          "custID": {
+            "type": "string",
+            "nullable": true
+          },
+          "SiteId": {
+            "type": "string",
+            "nullable": true
+          },
+          "AgreementTypeID": {
+            "type": "string",
+            "nullable": true
+          },
+          "ContractId": {
+            "type": "string",
+            "nullable": true
+          },
+          "User21": {
+            "type": "string",
+            "nullable": true
+          },
+          "expiredate": {
+            "type": "string",
+            "nullable": true
+          },
+          "Crtd_Prog": {
+            "type": "string",
+            "nullable": true
+          },
+          "Crtd_DateTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "Crtd_User": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetAccountRequest": {
+        "type": "object",
+        "properties": {
+          "custID": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetExternalContactRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetLocationRequest": {
+        "type": "object",
+        "properties": {
+          "custID": {
+            "type": "string",
+            "nullable": true
+          },
+          "idSitio": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetServiceRequest": {
+        "type": "object",
+        "properties": {
+          "ServicseCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetTicketRequest": {
+        "type": "object",
+        "properties": {
+          "no_Ticket": {
+            "type": "string",
+            "nullable": true
+          },
+          "no_Sitio": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LinkReleaseRequest": {
+        "required": [
+          "recIdRelationship",
+          "recIdRelease",
+          "tipo"
+        ],
+        "type": "object",
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "nullable": true
+          },
+          "recIdRelease": {
+            "type": "string",
+            "nullable": true
+          },
+          "recIdRelationship": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LocationRequest": {
+        "required": [
+          "CustID",
+          "ShiptoID"
+        ],
+        "type": "object",
+        "properties": {
+          "CustID": {
+            "type": "string",
+            "nullable": true
+          },
+          "ShiptoID": {
+            "type": "string",
+            "nullable": true
+          },
+          "Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "Addr1": {
+            "type": "string",
+            "nullable": true
+          },
+          "Addr2": {
+            "type": "string",
+            "nullable": true
+          },
+          "City": {
+            "type": "string",
+            "nullable": true
+          },
+          "State": {
+            "type": "string",
+            "nullable": true
+          },
+          "Zip": {
+            "type": "string",
+            "nullable": true
+          },
+          "Country": {
+            "type": "string",
+            "nullable": true
+          },
+          "securityentrycode": {
+            "type": "string",
+            "nullable": true
+          },
+          "Crtd_Prog": {
+            "type": "string",
+            "nullable": true
+          },
+          "Crtd_DateTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "Crtd_User": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ObjParentLink": {
+        "type": "object",
+        "properties": {
+          "ObjectId": {
+            "type": "string",
+            "nullable": true
+          },
+          "ObjectName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReleaseRequest": {
+        "type": "object",
+        "properties": {
+          "CustID": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TipoMaterialRequest": {
+        "type": "object",
+        "properties": {
+          "CodigoMaterial": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

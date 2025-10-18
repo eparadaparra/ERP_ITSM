@@ -1,0 +1,49 @@
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\appsettings.Development.json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\appsettings.json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\App_Data\Processed\251006_131257 .json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\App_Data\Processed\251006_132137 .json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\App_Data\Processed\251006_133653 .json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\App_Data\Processed\251006_134307 .json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\App_Data\Processed\251006_155404 .json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\App_Data\Processed\251006_155433 .json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\App_Data\Processed\251006_155517 .json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\App_Data\Processed\251006_155550 .json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\App_Data\Processed\251006_155929 .json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\App_Data\Processed\251006_155948 .json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\App_Data\Processed\251006_160106 .json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\App_Data\Processed\251006_160123 .json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\App_Data\Processed\251006_160324 .json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\ERP_ITSM.staticwebassets.endpoints.json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\ERP_ITSM.exe
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\ERP_ITSM.deps.json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\ERP_ITSM.runtimeconfig.json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\ERP_ITSM.dll
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\ERP_ITSM.pdb
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\Microsoft.OpenApi.dll
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\Newtonsoft.Json.dll
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\win-x64\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\ERP_ITSM.csproj.AssemblyReference.cache
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\rpswa.dswa.cache.json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\ERP_ITSM.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\ERP_ITSM.AssemblyInfoInputs.cache
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\ERP_ITSM.AssemblyInfo.cs
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\ERP_ITSM.csproj.CoreCompileInputs.cache
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\ERP_ITSM.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\ERP_ITSM.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\rjimswa.dswa.cache.json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\rjsmrazor.dswa.cache.json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\rjsmcshtml.dswa.cache.json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\scopedcss\bundle\ERP_ITSM.styles.css
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\staticwebassets.build.json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\staticwebassets.build.json.cache
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\staticwebassets.development.json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\staticwebassets.build.endpoints.json
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\staticwebassets.upToDateCheck.txt
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\ERP_ITSM.csproj.Up2Date
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\ERP_ITSM.dll
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\refint\ERP_ITSM.dll
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\ERP_ITSM.pdb
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\ERP_ITSM.genruntimeconfig.cache
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\win-x64\ref\ERP_ITSM.dll

@@ -1,0 +1,194 @@
+[
+  {
+    "ContainingType": "ERP_ITSM.Controllers.ERPController",
+    "Method": "GetAccount",
+    "RelativePath": "api/ERP/Account",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "ERP_ITSM.Models.GetAccountRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ERP_ITSM.Controllers.ERPController",
+    "Method": "GetContact",
+    "RelativePath": "api/ERP/ExternalContact",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "ERP_ITSM.Models.GetExternalContactRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ERP_ITSM.Controllers.ERPController",
+    "Method": "GetLink",
+    "RelativePath": "api/ERP/GetsLinks",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "ERP_ITSM.Models.ObjParentLink",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ERP_ITSM.Controllers.ERPController",
+    "Method": "SetLink",
+    "RelativePath": "api/ERP/LinkToRelease",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "ERP_ITSM.Models.LinkReleaseRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ERP_ITSM.Controllers.ERPController",
+    "Method": "GetLocationt",
+    "RelativePath": "api/ERP/Location",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "ERP_ITSM.Models.GetLocationRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ERP_ITSM.Controllers.ERPController",
+    "Method": "SetCI",
+    "RelativePath": "api/ERP/NuevoCI",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "ERP_ITSM.Models.CIRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ERP_ITSM.Controllers.ERPController",
+    "Method": "SetContrato",
+    "RelativePath": "api/ERP/NuevoContrato",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "ERP_ITSM.Models.ContratoRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ERP_ITSM.Controllers.ERPController",
+    "Method": "SetRelease",
+    "RelativePath": "api/ERP/NuevoRelease",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "ERP_ITSM.Models.ReleaseRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ERP_ITSM.Controllers.ERPController",
+    "Method": "SetLocation",
+    "RelativePath": "api/ERP/NuevoSitio",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "ERP_ITSM.Models.LocationRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ERP_ITSM.Controllers.ERPController",
+    "Method": "GetRelease",
+    "RelativePath": "api/ERP/Release",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "ERP_ITSM.Models.GetTicketRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ERP_ITSM.Controllers.ERPController",
+    "Method": "GetService",
+    "RelativePath": "api/ERP/Service",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "ERP_ITSM.Models.GetServiceRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ERP_ITSM.Controllers.ERPController",
+    "Method": "GetTipoMaterial",
+    "RelativePath": "api/ERP/TipoMaterial",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "ERP_ITSM.Models.TipoMaterialRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

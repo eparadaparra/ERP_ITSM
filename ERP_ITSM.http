@@ -1,0 +1,6 @@
+@ERP_ITSM_HostAddress = http://localhost:5017
+
+GET {{ERP_ITSM_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

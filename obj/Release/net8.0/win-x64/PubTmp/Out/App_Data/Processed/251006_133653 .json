@@ -1,0 +1,11 @@
+{
+  "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+  "title": "One or more validation errors occurred.",
+  "status": 400,
+  "errors": {
+    "filter": [
+      "A value for the 'filter' parameter or property was not provided."
+    ]
+  },
+  "traceId": "00-17732a0aef729f01ecb6da1d697db34e-4a177268e1ae0087-00"
+}
