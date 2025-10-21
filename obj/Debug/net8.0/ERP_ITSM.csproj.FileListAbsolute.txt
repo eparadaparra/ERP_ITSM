@@ -19,6 +19,7 @@ C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\ERP_I
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\ERP_ITSM.csproj.CoreCompileInputs.cache
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\ERP_ITSM.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\ERP_ITSM.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\ERP_ITSM.sourcelink.json
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\rjimswa.dswa.cache.json
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json

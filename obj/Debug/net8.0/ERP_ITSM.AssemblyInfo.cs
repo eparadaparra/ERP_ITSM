@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ERP_ITSM")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+43c8d3e097aa0b500026cb800f84b528e32c39ce")]
 [assembly: System.Reflection.AssemblyProductAttribute("ERP_ITSM")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ERP_ITSM")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,18 +1,5 @@
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\appsettings.Development.json
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\appsettings.json
-C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\App_Data\Processed\251006_131257 .json
-C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\App_Data\Processed\251006_132137 .json
-C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\App_Data\Processed\251006_133653 .json
-C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\App_Data\Processed\251006_134307 .json
-C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\App_Data\Processed\251006_155404 .json
-C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\App_Data\Processed\251006_155433 .json
-C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\App_Data\Processed\251006_155517 .json
-C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\App_Data\Processed\251006_155550 .json
-C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\App_Data\Processed\251006_155929 .json
-C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\App_Data\Processed\251006_155948 .json
-C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\App_Data\Processed\251006_160106 .json
-C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\App_Data\Processed\251006_160123 .json
-C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\App_Data\Processed\251006_160324 .json
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\ERP_ITSM.staticwebassets.endpoints.json
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\ERP_ITSM.exe
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\bin\Release\net8.0\ERP_ITSM.deps.json
@@ -47,3 +34,4 @@ C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\ref
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\ERP_ITSM.pdb
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\ERP_ITSM.genruntimeconfig.cache
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\ref\ERP_ITSM.dll
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Release\net8.0\ERP_ITSM.sourcelink.json

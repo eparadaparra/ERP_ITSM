@@ -552,6 +552,7 @@ namespace ERP_ITSM.Controllers
                         _ci.RecId               = respCI["RecId"].ToString();
 
                         await _services.LinkObj("CI", _ci.RecId, tipoCNT, respContract["RecId"]!.ToString());
+                        await _services.LinkObj("CI", _ci.RecId, "EX_CIAssocCIContract2", respContract["RecId"]!.ToString());
 
                         SendUpdate(_ci, body!);
 
@@ -568,16 +569,18 @@ namespace ERP_ITSM.Controllers
                 newCI["EX_Linea"]           = newCI["ivnt_AssetSubtype"].ToString() == "Linea" ? newCI["EX_Linea"].ToString() : "";
                 newCI["EX_PlanDatos"]       = newCI["ivnt_AssetSubtype"].ToString() == "Linea" ? newCI["EX_Imei"].ToString() : "";
                 newCI["Name"]               = String.Concat(contrato, " - ", (newCI["ivnt_AssetSubtype"]!.ToString() == "Linea") ? newCI["EX_Linea"].ToString() : serialNumber);
-
-                newCI.Remove("EX_CustID_Link_RecId");
-                newCI.Remove("ivnt_AssetLocation_RecId");
-                newCI.Remove("EX_ParentLink_RecId");
+                newCI["EX_CustID_Link"]     = newCI["CustID"]!.ToString();
+                newCI["ivnt_AssetLocation"] = newCI["ivnt_Location"]!.ToString();
+                newCI["EX_ParentLink"]      = newCI["EX_Contrato"]!.ToString();
 
                 var result = await _services.InsUpdObj("CI", newCI); // Console.WriteLine(result.GetType());
 
                 var json = JsonConvert.DeserializeObject<JArray>(result.ToString());
 
                 string recId = json[0]["CI"]["RecId"].ToString();     //JArray locationsArray = result[""] as JArray;
+
+                await _services.LinkObj("CI", recId, tipoCNT, respContract["RecId"]!.ToString());
+                await _services.LinkObj("CI", recId, "EX_CIAssocCIContract2", respContract["RecId"]!.ToString());
 
                 return Ok(new { status = StatusCodes.Status200OK, message = "Successed", data = new { recId = recId } });
                 #endregion
