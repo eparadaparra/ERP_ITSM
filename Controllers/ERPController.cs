@@ -490,12 +490,12 @@ namespace ERP_ITSM.Controllers
             try
             {
                 #region Primero valida si contiene los datos necesarios
-                    string custID       = body?.CustID?.Trim() ?? string.Empty;
-                    string sitioId      = body?.ivnt_Location?.Trim() ?? string.Empty;
-                    string contrato     = body?.EX_Contrato?.Trim() ?? string.Empty;
-                    string tipoMaterial = body?.CIType?.Trim() ?? string.Empty;
-                    string serialNumber = body?.SerialNumber?.Trim() ?? string.Empty;
-                    string tipoCNT = String.Empty;
+                    string custID        = body?.CustID?.Trim() ?? string.Empty;
+                    string sitioId       = body?.ivnt_Location?.Trim() ?? string.Empty;
+                    string contrato      = body?.EX_Contrato?.Trim() ?? string.Empty;
+                    string tipoMaterial  = body?.CIType?.Trim() ?? string.Empty;
+                    string serialNumber  = body?.SerialNumber?.Trim() ?? string.Empty;
+                    List<string> tipoCNT = new List<string>();
 
                 if (string.IsNullOrEmpty(custID) || string.IsNullOrEmpty(contrato) || string.IsNullOrEmpty(sitioId) || string.IsNullOrEmpty(tipoMaterial) || string.IsNullOrEmpty(serialNumber))
                     {
@@ -537,7 +537,8 @@ namespace ERP_ITSM.Controllers
                     } else
                     {
                         _ci.EX_ParentLink = respContract["RecId"]!.ToString();
-                        tipoCNT = RelationshipName("CI_CONTRATO");
+                        tipoCNT.Add( RelationshipName("CI_CONTRATO") );
+                        tipoCNT.Add( RelationshipName("CI_CONTRATO2") );
                 }
                 #endregion
 
@@ -551,8 +552,8 @@ namespace ERP_ITSM.Controllers
                     {
                         _ci.RecId               = respCI["RecId"].ToString();
 
-                        await _services.LinkObj("CI", _ci.RecId, tipoCNT, respContract["RecId"]!.ToString());
-                        await _services.LinkObj("CI", _ci.RecId, "EX_CIAssocCIContract2", respContract["RecId"]!.ToString());
+                        await _services.LinkObj("CI", _ci.RecId, tipoCNT[0].ToString(), respContract["RecId"]!.ToString());
+                        await _services.LinkObj("CI", _ci.RecId, tipoCNT[1].ToString(), respContract["RecId"]!.ToString());
 
                         SendUpdate(_ci, body!);
 
@@ -579,8 +580,8 @@ namespace ERP_ITSM.Controllers
 
                 string recId = json[0]["CI"]["RecId"].ToString();     //JArray locationsArray = result[""] as JArray;
 
-                await _services.LinkObj("CI", recId, tipoCNT, respContract["RecId"]!.ToString());
-                await _services.LinkObj("CI", recId, "EX_CIAssocCIContract2", respContract["RecId"]!.ToString());
+                await _services.LinkObj("CI", recId, tipoCNT[0].ToString(), respContract["RecId"]!.ToString());
+                await _services.LinkObj("CI", recId, tipoCNT[1].ToString(), respContract["RecId"]!.ToString());
 
                 return Ok(new { status = StatusCodes.Status200OK, message = "Successed", data = new { recId = recId } });
                 #endregion
@@ -758,6 +759,7 @@ namespace ERP_ITSM.Controllers
             return tipo.ToUpper() switch
             {
                 "CI_CONTRATO"       => "EX_CIAssocCIContract".ToUpper(),
+                "CI_CONTRATO2"       => "EX_CIAssocCIContract2".ToUpper(),
                 "RELEASE_SITIO"     => "EX_ReleaseProjectAssocLocation".ToUpper(),
                 "RELEASE_CI"        => "ReleaseProjectAssocCI".ToUpper(),
                 "RELEASE_SERVICE"   => "ReleaseProjectAssocCIService".ToUpper(),
