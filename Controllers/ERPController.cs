@@ -13,13 +13,13 @@ namespace ERP_ITSM.Controllers
     {
         private readonly IServices _services;
 
-        private Release _release            = new Release();
-        private Milestone _milestone        = new Milestone();
-        private Location _location          = new Location();
-        private Contrato _contrato          = new Contrato();
-        private CI _ci                      = new CI();
-        private TipoMaterial _tipoMarerial  = new TipoMaterial();
-        private Service _service            = new Service();
+        private Release _release = new Release();
+        private Milestone _milestone = new Milestone();
+        private Location _location = new Location();
+        private Contrato _contrato = new Contrato();
+        private CI _ci = new CI();
+        private TipoMaterial _tipoMarerial = new TipoMaterial();
+        private Service _service = new Service();
 
         public ERPController(IServices servicesAPI)
         {
@@ -101,10 +101,10 @@ namespace ERP_ITSM.Controllers
 
             string seleccion = "ReleaseNumber, EX_LocationID_Link_RecID, EX_CustID_Link_RecID";
 
-            var respRelease = await _services.FilterObj( "Release", filter, seleccion );
+            var respRelease = await _services.FilterObj("Release", filter, seleccion);
             //Console.WriteLine(resp.GetType());
 
-            if  ( respRelease.ContainsKey("logID") )
+            if (respRelease.ContainsKey("logID"))
             {
                 return Ok(new { status = StatusCodes.Status200OK, message = "No se encontró el Release", data = "" });
             }
@@ -113,13 +113,14 @@ namespace ERP_ITSM.Controllers
                 var recIdSitio = respRelease["EX_LocationID_Link_RecID"].ToString();
                 var recCustId = respRelease["EX_CustID_Link_RecID"].ToString();
 
-                var respLocation = await _services.FilterObj( "Location", $"recId eq '{recIdSitio}' AND EX_CustID_Link_RecID eq '{recCustId}'", "EX_IdSitio");
+                var respLocation = await _services.FilterObj("Location", $"recId eq '{recIdSitio}' AND EX_CustID_Link_RecID eq '{recCustId}'", "EX_IdSitio");
 
                 if (respLocation["EX_IdSitio"].ToString() != idSitio)
                 {
                     return Ok(new { status = StatusCodes.Status200OK, message = $"No coincíde el sitio {idSitio} para el Release {releaseNum}", data = "" });
                 }
-                else {
+                else
+                {
 
                     respRelease.Remove("EX_CustID_Link_RecID");
                     respRelease["ReleaseNumber"] = releaseNum;
@@ -130,7 +131,7 @@ namespace ERP_ITSM.Controllers
 
                     return Ok(new { status = StatusCodes.Status200OK, message = "Successed", data = release });
                 }
-                    
+
             }
         }
         #endregion
@@ -182,14 +183,14 @@ namespace ERP_ITSM.Controllers
             filter = $"EX_CodigoTipoMaterial eq '{codigoMaterial}'";
             seleccion = "ivnt_ParentAssetType, ivnt_SubType, EX_CodigoTipoMaterial, ivnt_ParentAssetType_Valid, RecId";
 
-            var resp = await _services.FilterObj("ivnt_AssetSubType", filter, seleccion );
+            var resp = await _services.FilterObj("ivnt_AssetSubType", filter, seleccion);
 
             if (!resp.ContainsKey("RecId"))
             {
                 return Ok(new { status = StatusCodes.Status200OK, message = "No se encontró Código de Material", data = "" });
             }
 
-            SetValuesModels( _tipoMarerial, resp!);
+            SetValuesModels(_tipoMarerial, resp!);
 
             var recIdAssetType = resp["ivnt_ParentAssetType_Valid"].ToString();
 
@@ -199,9 +200,9 @@ namespace ERP_ITSM.Controllers
             var respAsstType = await _services.FilterObj("ivnt_ParentAssetType", filter, seleccion);
 
             SetValuesModels(_tipoMarerial, respAsstType!);
-                
+
             return Ok(new { status = StatusCodes.Status200OK, message = "Successed", data = _tipoMarerial });
-            
+
         }
         #endregion
 
@@ -255,53 +256,54 @@ namespace ERP_ITSM.Controllers
                 #endregion
 
                 #region Valida si Existe el Customer
-                    string filter = $"CustID eq '{custID}'";
-                    string seleccion = "RecId";
+                string filter = $"CustID eq '{custID}'";
+                string seleccion = "RecId";
 
-                    var respAcc = await _services.FilterObj("Account", filter, seleccion);
+                var respAcc = await _services.FilterObj("Account", filter, seleccion);
 
-                    if (!respAcc.ContainsKey("RecId"))
-                    {
-                        return Ok(new { status = StatusCodes.Status200OK, message = "Customer No Existe", data = new { custID = custID } });
-                    }
+                if (!respAcc.ContainsKey("RecId"))
+                {
+                    return Ok(new { status = StatusCodes.Status200OK, message = "Customer No Existe", data = new { custID = custID } });
+                }
                 #endregion
 
                 #region Crea Release
-                    body!.EX_CustID_Link_RecID = respAcc["RecId"]!.ToString();
-                    milestoneRequest.EX_CustID_Link_RecID = respAcc["RecId"]!.ToString();
+                body!.EX_CustID_Link_RecID = respAcc["RecId"]!.ToString();
+                milestoneRequest.EX_CustID_Link_RecID = respAcc["RecId"]!.ToString();
 
-                    SetValuesModels(_release, body);
+                SetValuesModels(_release, body);
 
-                    var resultRelease = await _services.InsUpdObj("Release", _release);
-                    //Console.WriteLine(resultRelease.GetType());
-                    var jRelease = JsonConvert.DeserializeObject<JArray>(resultRelease.ToString());
+                var resultRelease = await _services.InsUpdObj("Release", _release);
+                //Console.WriteLine(resultRelease.GetType());
+                var jRelease = JsonConvert.DeserializeObject<JArray>(resultRelease.ToString());
 
-                    if (jRelease == null || jRelease.Count == 0)
-                    {
-                        return Ok(new { status = StatusCodes.Status200OK, message = "Error al crear Release", data = "{}" });
-                    }
+                if (jRelease == null || jRelease.Count == 0)
+                {
+                    return Ok(new { status = StatusCodes.Status200OK, message = "Error al crear Release", data = "{}" });
+                }
                 #endregion
 
                 #region Crea Milestone
-                    var recIdRelease = jRelease[0]["RELEASEPROJECT"]["RecId"].ToString();
-                    _release.RecId = recIdRelease;
-                    milestoneRequest.ReleaseLink_RecID = recIdRelease;
+                var recIdRelease = jRelease[0]["RELEASEPROJECT"]["RecId"].ToString();
+                var releaseNumber = jRelease[0]["RELEASEPROJECT"]["ReleaseNumber"].ToString(); ;
+                _release.RecId = recIdRelease;
+                milestoneRequest.ReleaseLink_RecID = recIdRelease;
 
-                    SetValuesModels(_milestone, milestoneRequest);
+                SetValuesModels(_milestone, milestoneRequest);
 
-                    var resultMilestone = await _services.InsUpdObj("Milestone", _milestone);
+                var resultMilestone = await _services.InsUpdObj("Milestone", _milestone);
 
-                    var jMilestone = JsonConvert.DeserializeObject<JArray>(resultMilestone.ToString());
+                var jMilestone = JsonConvert.DeserializeObject<JArray>(resultMilestone.ToString());
 
-                    var recIdMilestone = jMilestone[0]["RELEASEMILESTONE"]["RecId"].ToString();
+                var recIdMilestone = jMilestone[0]["RELEASEMILESTONE"]["RecId"].ToString();
 
-                    if (jMilestone == null || jMilestone.Count == 0)
-                    {
-                        return Ok(new { status = StatusCodes.Status200OK, message = "Error al crear Milestone", data = "{}" });
-                    }
+                if (jMilestone == null || jMilestone.Count == 0)
+                {
+                    return Ok(new { status = StatusCodes.Status200OK, message = "Error al crear Milestone", data = "{}" });
+                }
                 #endregion
-                
-                return Ok(new { status = StatusCodes.Status200OK, message = "Successed", data = new { RecId = _release.RecId } });
+
+                return Ok(new { status = StatusCodes.Status200OK, message = "Successed", data = new { RecId = _release.RecId, ReleaseNumber = releaseNumber } });
             }
             catch (Exception ex)
             {
@@ -321,7 +323,7 @@ namespace ERP_ITSM.Controllers
             {
                 #region Primero valida si contiene los datos necesarios
                 string custID = body?.CustID?.Trim() ?? string.Empty;
-                string idSitio = body?.EX_IdSitio?.Trim()?? string.Empty;
+                string idSitio = body?.EX_IdSitio?.Trim() ?? string.Empty;
 
                 if (string.IsNullOrEmpty(custID) || string.IsNullOrEmpty(idSitio))
                 {
@@ -384,63 +386,68 @@ namespace ERP_ITSM.Controllers
             try
             {
                 #region Primero valida si contiene los datos necesarios
-                    string custID       = body?.CustID?.Trim() ?? string.Empty;
-                    string idSitio      = body?.ivnt_AssetLocation?.Trim() ?? string.Empty;
-                    string tipoContrato = body?.EX_TipoContrato_Link?.Trim() ?? string.Empty;
-                    string contrato     = body?.ivnt_InternalID?.Trim() ?? string.Empty;
-                    string recIdAcc     = String.Empty;
-                    string recIdLoc     = String.Empty;
-                    string recIdTipoCnt = String.Empty;
-                    string filter       = String.Empty;
-                    string seleccion    = String.Empty;
+                string custID = body?.CustID?.Trim() ?? string.Empty;
+                string idSitio = body?.ivnt_AssetLocation?.Trim() ?? string.Empty;
+                string tipoContrato = body?.EX_TipoContrato_Link?.Trim() ?? string.Empty;
+                string contrato = body?.ivnt_InternalID?.Trim() ?? string.Empty;
+                string recIdAcc = String.Empty;
+                string recIdLoc = String.Empty;
+                string recIdTipoCnt = String.Empty;
+                string filter = String.Empty;
+                string seleccion = String.Empty;
 
-                    if (string.IsNullOrEmpty(custID) || string.IsNullOrEmpty(idSitio) || string.IsNullOrEmpty(tipoContrato) || string.IsNullOrEmpty(contrato))
-                    {
-                        return BadRequest(new { status = StatusCodes.Status400BadRequest, message = "custID, IdSitio TipoContrato and contrato is required", data = "{}" });
-                    }
+                if (string.IsNullOrEmpty(custID) || string.IsNullOrEmpty(idSitio) || string.IsNullOrEmpty(tipoContrato) || string.IsNullOrEmpty(contrato))
+                {
+                    return BadRequest(new { status = StatusCodes.Status400BadRequest, message = "custID, IdSitio TipoContrato and contrato is required", data = "{}" });
+                }
                 #endregion
 
                 #region Valida si Existe el Customer
                 filter = $"CustID eq '{custID}'";
-                    seleccion = "RecId";
+                seleccion = "RecId";
 
-                    var respAcc = await _services.FilterObj("ACCOUNT", filter, seleccion);
+                var respAcc = await _services.FilterObj("ACCOUNT", filter, seleccion);
 
-                    if (!respAcc.ContainsKey("RecId"))
-                    {
-                        return Ok(new { status = StatusCodes.Status200OK, message = "Customer No Existe", data = new { CustID = custID } });
-                    } else {
-                        recIdAcc = respAcc["RecId"].ToString();
+                if (!respAcc.ContainsKey("RecId"))
+                {
+                    return Ok(new { status = StatusCodes.Status200OK, message = "Customer No Existe", data = new { CustID = custID } });
                 }
-                    #endregion
+                else
+                {
+                    recIdAcc = respAcc["RecId"].ToString();
+                }
+                #endregion
 
                 #region Valida si Existe el Sitio
-                    filter = $"CustID eq '{custID}' AND EX_IdSitio eq '{idSitio}'";
-                    seleccion = "RecId";
+                filter = $"CustID eq '{custID}' AND EX_IdSitio eq '{idSitio}'";
+                seleccion = "RecId";
 
-                    var respLocation = await _services.FilterObj("Location", filter, seleccion);
+                var respLocation = await _services.FilterObj("Location", filter, seleccion);
 
-                    if (!respLocation.ContainsKey("RecId"))
-                    {
-                        return Ok(new { status = StatusCodes.Status200OK, message = $"Sitio No Existe para cliente {custID}", data = new { ShiptoID = idSitio } });
-                    } else
-                        {
-                            recIdLoc = respLocation["RecId"].ToString();
-                        }
+                if (!respLocation.ContainsKey("RecId"))
+                {
+                    return Ok(new { status = StatusCodes.Status200OK, message = $"Sitio No Existe para cliente {custID}", data = new { ShiptoID = idSitio } });
+                }
+                else
+                {
+                    recIdLoc = respLocation["RecId"].ToString();
+                }
                 #endregion
 
                 #region Valida si Existe el TipoContrato
                 filter = $"EX_TipoContrato eq '{tipoContrato}'";
-                    seleccion = "RecId, EX_DescripcionTipoContrato";
+                seleccion = "RecId, EX_DescripcionTipoContrato";
 
-                    var respTipoCnt = await _services.FilterObj("EX_ObjTiposContratos", filter, seleccion);
+                var respTipoCnt = await _services.FilterObj("EX_ObjTiposContratos", filter, seleccion);
 
-                    if (!respTipoCnt.ContainsKey("RecId"))
-                    {
-                        return Ok(new { status = StatusCodes.Status200OK, message = "Tipo de Contrato No Existe", data = new { AgreementTypeID = tipoContrato } });
-                    } else {
-                        recIdTipoCnt = respTipoCnt["RecId"].ToString();
-                    }
+                if (!respTipoCnt.ContainsKey("RecId"))
+                {
+                    return Ok(new { status = StatusCodes.Status200OK, message = "Tipo de Contrato No Existe", data = new { AgreementTypeID = tipoContrato } });
+                }
+                else
+                {
+                    recIdTipoCnt = respTipoCnt["RecId"].ToString();
+                }
                 #endregion
 
                 #region Valida si Existe el Contrato
@@ -490,75 +497,80 @@ namespace ERP_ITSM.Controllers
             try
             {
                 #region Primero valida si contiene los datos necesarios
-                    string custID        = body?.CustID?.Trim() ?? string.Empty;
-                    string sitioId       = body?.ivnt_Location?.Trim() ?? string.Empty;
-                    string contrato      = body?.EX_Contrato?.Trim() ?? string.Empty;
-                    string tipoMaterial  = body?.CIType?.Trim() ?? string.Empty;
-                    string serialNumber  = body?.SerialNumber?.Trim() ?? string.Empty;
-                    List<string> tipoCNT = new List<string>();
+                string custID = body?.CustID?.Trim() ?? string.Empty;
+                string sitioId = body?.ivnt_Location?.Trim() ?? string.Empty;
+                string contrato = body?.EX_Contrato?.Trim() ?? string.Empty;
+                string tipoMaterial = body?.CIType?.Trim() ?? string.Empty;
+                string serialNumber = body?.SerialNumber?.Trim() ?? string.Empty;
+                List<string> tipoCNT = new List<string>();
 
                 if (string.IsNullOrEmpty(custID) || string.IsNullOrEmpty(contrato) || string.IsNullOrEmpty(sitioId) || string.IsNullOrEmpty(tipoMaterial) || string.IsNullOrEmpty(serialNumber))
-                    {
-                        return BadRequest(new { status = StatusCodes.Status400BadRequest, message = "custID, Contrato, SitioId and Tipo CI is required", data = "{}" });
-                    }
+                {
+                    return BadRequest(new { status = StatusCodes.Status400BadRequest, message = "custID, Contrato, SitioId and Tipo CI is required", data = "{}" });
+                }
                 #endregion
 
                 #region Valida si Existe el Customer
-                    string filter = $"CustID eq '{custID}'";
-                    string seleccion = "RecId";
-                    var respAcc = await _services.FilterObj("Account", filter, seleccion);
-                    if (!respAcc.ContainsKey("RecId")) {
-                        return Ok(new { status = StatusCodes.Status200OK, message = "Customer No Existe", data = new { custID = custID } }); 
-                    } else {
-                        _ci.EX_CustID_Link = respAcc["RecId"].ToString();
+                string filter = $"CustID eq '{custID}'";
+                string seleccion = "RecId";
+                var respAcc = await _services.FilterObj("Account", filter, seleccion);
+                if (!respAcc.ContainsKey("RecId"))
+                {
+                    return Ok(new { status = StatusCodes.Status200OK, message = "Customer No Existe", data = new { custID = custID } });
+                }
+                else
+                {
+                    _ci.EX_CustID_Link = respAcc["RecId"].ToString();
                 }
                 #endregion
-                
+
                 #region Valida si Existe el Sitio
-                    filter = $"CustID eq '{custID}' AND EX_IdSitio eq '{sitioId}'";
-                    seleccion = "RecId";
-                    var respLocation = await _services.FilterObj("Location", filter, seleccion);
-                    if (!respLocation.ContainsKey("RecId"))
-                    {
-                        return Ok(new { status = StatusCodes.Status200OK, message = "Sitio No Existe", data = new { ShiptoID = sitioId } });
-                    } else
-                    {
-                        _ci.ivnt_AssetLocation = respLocation["RecId"]!.ToString();
+                filter = $"CustID eq '{custID}' AND EX_IdSitio eq '{sitioId}'";
+                seleccion = "RecId";
+                var respLocation = await _services.FilterObj("Location", filter, seleccion);
+                if (!respLocation.ContainsKey("RecId"))
+                {
+                    return Ok(new { status = StatusCodes.Status200OK, message = "Sitio No Existe", data = new { ShiptoID = sitioId } });
+                }
+                else
+                {
+                    _ci.ivnt_AssetLocation = respLocation["RecId"]!.ToString();
                 }
                 #endregion
-                
+
                 #region Valida si Existe el Contrato
-                    filter = $"ivnt_InternalID eq '{contrato}'";
-                    seleccion = "RecId";
-                    var respContract = await _services.FilterObj("Contract", filter, seleccion);
-                    if (!respContract.ContainsKey("RecId"))
-                    {
-                        return Ok(new { status = StatusCodes.Status200OK, message = "Contrato No Existe", data = new { contrato = contrato } });
-                    } else
-                    {
-                        _ci.EX_ParentLink = respContract["RecId"]!.ToString();
-                        tipoCNT.Add( RelationshipName("CI_CONTRATO") );
-                        tipoCNT.Add( RelationshipName("CI_CONTRATO2") );
+                filter = $"ivnt_InternalID eq '{contrato}'";
+                seleccion = "RecId";
+                var respContract = await _services.FilterObj("Contract", filter, seleccion);
+                if (!respContract.ContainsKey("RecId"))
+                {
+                    return Ok(new { status = StatusCodes.Status200OK, message = "Contrato No Existe", data = new { contrato = contrato } });
+                }
+                else
+                {
+                    _ci.EX_ParentLink = respContract["RecId"]!.ToString();
+                    tipoCNT.Add(RelationshipName("CI_CONTRATO"));
+                    tipoCNT.Add(RelationshipName("CI_CONTRATO2"));
                 }
                 #endregion
 
                 #region Valida si Existe el Ci
-                    filter = $"EX_Contrato eq '{contrato}' AND SerialNumber eq '{serialNumber}'";
-                    seleccion = "RecId";
+                filter = $"EX_Contrato eq '{contrato}' AND SerialNumber eq '{serialNumber}'";
+                seleccion = "RecId";
 
-                    var respCI = await _services.FilterObj("CI", filter, seleccion );
+                var respCI = await _services.FilterObj("CI", filter, seleccion);
 
-                    if (respCI.ContainsKey("RecId"))
-                    {
-                        _ci.RecId               = respCI["RecId"].ToString();
+                if (respCI.ContainsKey("RecId"))
+                {
+                    _ci.RecId = respCI["RecId"].ToString();
 
-                        await _services.LinkObj("CI", _ci.RecId, tipoCNT[0].ToString(), respContract["RecId"]!.ToString());
-                        await _services.LinkObj("CI", _ci.RecId, tipoCNT[1].ToString(), respContract["RecId"]!.ToString());
+                    await _services.LinkObj("CI", _ci.RecId, tipoCNT[0].ToString(), respContract["RecId"]!.ToString());
+                    await _services.LinkObj("CI", _ci.RecId, tipoCNT[1].ToString(), respContract["RecId"]!.ToString());
 
-                        SendUpdate(_ci, body!);
+                    SendUpdate(_ci, body!);
 
-                        return Ok(new { status = StatusCodes.Status200OK, message = "CI Existente", data = new { RecId = respCI["RecId"].ToString() } });
-                    }
+                    return Ok(new { status = StatusCodes.Status200OK, message = "CI Existente", data = new { RecId = respCI["RecId"].ToString() } });
+                }
                 #endregion
 
                 #region Crea CI
@@ -567,12 +579,12 @@ namespace ERP_ITSM.Controllers
                 JObject newCI = JObject.FromObject(_ci);
 
                 newCI["ivnt_AssetFullType"] = body?.ivnt_ParentAssetTypeDisplay?.Trim() + " - " + newCI["ivnt_AssetSubtype"]!.ToString().Trim();
-                newCI["EX_Linea"]           = newCI["ivnt_AssetSubtype"].ToString() == "Linea" ? newCI["EX_Linea"].ToString() : "";
-                newCI["EX_PlanDatos"]       = newCI["ivnt_AssetSubtype"].ToString() == "Linea" ? newCI["EX_Imei"].ToString() : "";
-                newCI["Name"]               = String.Concat(contrato, " - ", (newCI["ivnt_AssetSubtype"]!.ToString() == "Linea") ? newCI["EX_Linea"].ToString() : serialNumber);
-                newCI["EX_CustID_Link"]     = newCI["CustID"]!.ToString();
+                newCI["EX_Linea"] = newCI["ivnt_AssetSubtype"].ToString() == "Linea" ? newCI["EX_Linea"].ToString() : "";
+                newCI["EX_PlanDatos"] = newCI["ivnt_AssetSubtype"].ToString() == "Linea" ? newCI["EX_Imei"].ToString() : "";
+                newCI["Name"] = String.Concat(contrato, " - ", (newCI["ivnt_AssetSubtype"]!.ToString() == "Linea") ? newCI["EX_Linea"].ToString() : serialNumber);
+                newCI["EX_CustID_Link"] = newCI["CustID"]!.ToString();
                 newCI["ivnt_AssetLocation"] = newCI["ivnt_Location"]!.ToString();
-                newCI["EX_ParentLink"]      = newCI["EX_Contrato"]!.ToString();
+                newCI["EX_ParentLink"] = newCI["EX_Contrato"]!.ToString();
 
                 var result = await _services.InsUpdObj("CI", newCI); // Console.WriteLine(result.GetType());
 
@@ -645,7 +657,7 @@ namespace ERP_ITSM.Controllers
                 var resp = await _services.LinkObj("Release", recIdRelease, tipo, recIdRelationship);
 
                 if (tipo == "RELEASE_CI")
-                { 
+                {
                 }
                 //Console.WriteLine(resp.GetType());
                 var jResp = JsonConvert.DeserializeObject<Links>(resp.ToString());
@@ -683,7 +695,7 @@ namespace ERP_ITSM.Controllers
             }
         }
         #endregion
-    
+
         private void SetValuesModels(object modelo, object body)
         {
             var jObject = JObject.FromObject(body);
@@ -694,7 +706,7 @@ namespace ERP_ITSM.Controllers
                 var propInfo = modelo.GetType().GetProperty(property.Name);
                 if (propInfo != null)
                 {
-                    propInfo.SetValue(modelo, property.Value.ToString()); 
+                    propInfo.SetValue(modelo, property.Value.ToString());
                 }
             }
         }
@@ -713,12 +725,14 @@ namespace ERP_ITSM.Controllers
                     break;
                 default:
                     break;
-            };
+            }
+            ;
 
             SetValuesModels(modelo, body);
             newObject = JObject.FromObject(modelo);
 
-            switch (objName) {
+            switch (objName)
+            {
                 case "Contrato":
                     newObject.Remove("CIType");
                     newObject.Remove("CITypeList");
@@ -744,25 +758,26 @@ namespace ERP_ITSM.Controllers
                     newObject.Remove("Name");
                     newObject.Remove("ivnt_AssetFullType");
 
-                    newObject["EX_Linea"]     = newObject["ivnt_AssetSubtype"].ToString() == "Linea" ? newObject["EX_Linea"].ToString() : "";
+                    newObject["EX_Linea"] = newObject["ivnt_AssetSubtype"].ToString() == "Linea" ? newObject["EX_Linea"].ToString() : "";
                     newObject["EX_PlanDatos"] = newObject["ivnt_AssetSubtype"].ToString() == "Linea" ? newObject["EX_Imei"].ToString() : "";
 
                     objName = "Ci";
                     break;
-            };
+            }
+            ;
 
             await _services.InsUpdObj(objName, newObject, "UPD");
         }
-    
+
         private string RelationshipName(string tipo)
         {
             return tipo.ToUpper() switch
             {
-                "CI_CONTRATO"       => "EX_CIAssocCIContract".ToUpper(),
-                "CI_CONTRATO2"       => "EX_CIAssocCIContract2".ToUpper(),
-                "RELEASE_SITIO"     => "EX_ReleaseProjectAssocLocation".ToUpper(),
-                "RELEASE_CI"        => "ReleaseProjectAssocCI".ToUpper(),
-                "RELEASE_SERVICE"   => "ReleaseProjectAssocCIService".ToUpper(),
+                "CI_CONTRATO" => "EX_CIAssocCIContract".ToUpper(),
+                "CI_CONTRATO2" => "EX_CIAssocCIContract2".ToUpper(),
+                "RELEASE_SITIO" => "EX_ReleaseProjectAssocLocation".ToUpper(),
+                "RELEASE_CI" => "ReleaseProjectAssocCI".ToUpper(),
+                "RELEASE_SERVICE" => "ReleaseProjectAssocCIService".ToUpper(),
                 "RELEASE_MILESTONE" => "EX_ReleaseMilestoneAssocLocation".ToUpper(),
                 _ => "SIN_TIPO"
             };
