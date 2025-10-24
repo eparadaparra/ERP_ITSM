@@ -472,8 +472,13 @@ namespace ERP_ITSM.Controllers
                 SetValuesModels(_contrato, body);
                 _contrato.EX_CustID_Link = custID;
                 _contrato.Name = contrato;
+                JObject newCnt = JObject.FromObject(_contrato);
 
-                var result = await _services.InsUpdObj("Contract", _contrato);
+                newCnt.Remove("EX_CustID_Link_RecID");
+                newCnt.Remove("EX_TipoContrato_Link_RecID");
+
+
+                var result = await _services.InsUpdObj("Contract", newCnt);
 
                 var json = JsonConvert.DeserializeObject<JArray>(result.ToString());
 
