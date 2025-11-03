@@ -33,6 +33,26 @@
   },
   {
     "ContainingType": "ERP_ITSM.Controllers.ERPController",
+    "Method": "GetClosedRelease",
+    "RelativePath": "api/ERP/GetClosedRelease",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ERP_ITSM.Controllers.ERPController",
+    "Method": "GetProductionCI",
+    "RelativePath": "api/ERP/GetProductionCI",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ERP_ITSM.Controllers.ERPController",
     "Method": "GetLink",
     "RelativePath": "api/ERP/GetsLinks",
     "HttpMethod": "POST",

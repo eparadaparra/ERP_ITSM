@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace ERP_ITSM.Models
 {
@@ -61,7 +62,6 @@ namespace ERP_ITSM.Models
 
         [JsonPropertyName("EX_CustID_Link")]
         public string EX_CustID_Link { get; set; }
-        //public string EX_CustID_Link_RecId { get; set; }
 
         [JsonPropertyName("CustID")]
         public string CustID { get; set; }
@@ -71,7 +71,6 @@ namespace ERP_ITSM.Models
 
         [JsonPropertyName("EX_ParentLink")]
         public string EX_ParentLink { get; set; }
-        //public string EX_ParentLink_RecId { get; set; }
 
         [JsonPropertyName("EX_CiService")]
         public string EX_CiService { get; set; }
@@ -84,7 +83,6 @@ namespace ERP_ITSM.Models
 
         [JsonPropertyName("ivnt_AssetLocation")]
         public string ivnt_AssetLocation { get; set; }
-        //public string ivnt_AssetLocation_RecId { get; set; }
 
         [JsonPropertyName("ivnt_Location")]
         public string ivnt_Location { get; set; }
@@ -118,5 +116,36 @@ namespace ERP_ITSM.Models
 
         [JsonPropertyName("User")]
         public string User { get; set; }
+    }
+
+    public class ODataResponse<T>
+    {
+        [JsonProperty("@odata.context")]
+        public string Context { get; set; }
+
+        [JsonProperty("@odata.count")]
+        public int Count { get; set; }
+
+        [JsonPropertyName("value")]
+        public List<ProductionCI> Value { get; set; }
+    }
+    public class ProductionCI
+    {
+        public string RecId { get; set; }
+
+        [JsonPropertyName("ModeloEquipo")]
+        public string Model { get; set; }
+
+        [JsonPropertyName("NumeroSerie")]
+        public string SerialNumber { get; set; }
+
+        [JsonPropertyName("IPEquipo")]
+        public string EX_IPAddress { get; set; }
+
+        [JsonPropertyName("IPMonitoreo")]
+        public string EX_IPMonitoreo { get; set; }
+
+        [JsonPropertyName("Contrato")]
+        public string EX_Contrato { get; set; }
     }
 }

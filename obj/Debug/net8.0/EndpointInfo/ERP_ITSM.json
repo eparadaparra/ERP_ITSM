@@ -67,37 +67,6 @@
         }
       }
     },
-    "/api/ERP/Release": {
-      "post": {
-        "tags": [
-          "ERP"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetTicketRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetTicketRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetTicketRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/ERP/ExternalContact": {
       "post": {
         "tags": [
@@ -180,6 +149,37 @@
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/GetServiceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ERP/Release": {
+      "post": {
+        "tags": [
+          "ERP"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetTicketRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetTicketRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetTicketRequest"
               }
             }
           }
@@ -376,6 +376,30 @@
           }
         }
       }
+    },
+    "/api/ERP/GetClosedRelease": {
+      "post": {
+        "tags": [
+          "ERP"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ERP/GetProductionCI": {
+      "post": {
+        "tags": [
+          "ERP"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -542,10 +566,6 @@
         "type": "object",
         "properties": {
           "no_Ticket": {
-            "type": "string",
-            "nullable": true
-          },
-          "no_Sitio": {
             "type": "string",
             "nullable": true
           }

@@ -1,7 +1,7 @@
-﻿using ERP_ITSM.Models;
+﻿using ERP_ITSM.Custom;
+using ERP_ITSM.Models;
 using ERP_ITSM.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters.Xml;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -80,58 +80,6 @@ namespace ERP_ITSM.Controllers
             {
                 GetLocation location = resp.ToObject<GetLocation>();
                 return Ok(new { status = StatusCodes.Status200OK, message = "Successed", data = location });
-            }
-        }
-        #endregion
-
-        #region Find Release
-        [HttpPost]
-        [Route("Release")]
-        public async Task<IActionResult> GetRelease([FromBody] GetTicketRequest body)
-        {
-            string releaseNum = body?.no_Ticket?.Trim() ?? string.Empty;
-            string idSitio = body?.no_Sitio?.Trim() ?? string.Empty;
-
-            if (string.IsNullOrEmpty(releaseNum) || string.IsNullOrEmpty(idSitio))
-            {
-                return BadRequest(new { status = StatusCodes.Status400BadRequest, message = "No Ticket and No Sitio is required", data = "" });
-            }
-
-            string filter = $"ReleaseNumber eq {releaseNum} AND EX_TipoRelease eq 'Nuevo Sitio' ";  //  AND EX_LocationID_Link_RecID eq '{idSitio}' 
-
-            string seleccion = "ReleaseNumber, EX_LocationID_Link_RecID, EX_CustID_Link_RecID";
-
-            var respRelease = await _services.FilterObj("Release", filter, seleccion);
-            //Console.WriteLine(resp.GetType());
-
-            if (respRelease.ContainsKey("logID"))
-            {
-                return Ok(new { status = StatusCodes.Status200OK, message = "No se encontró el Release", data = "" });
-            }
-            else
-            {
-                var recIdSitio = respRelease["EX_LocationID_Link_RecID"].ToString();
-                var recCustId = respRelease["EX_CustID_Link_RecID"].ToString();
-
-                var respLocation = await _services.FilterObj("Location", $"recId eq '{recIdSitio}' AND EX_CustID_Link_RecID eq '{recCustId}'", "EX_IdSitio");
-
-                if (respLocation["EX_IdSitio"].ToString() != idSitio)
-                {
-                    return Ok(new { status = StatusCodes.Status200OK, message = $"No coincíde el sitio {idSitio} para el Release {releaseNum}", data = "" });
-                }
-                else
-                {
-
-                    respRelease.Remove("EX_CustID_Link_RecID");
-                    respRelease["ReleaseNumber"] = releaseNum;
-                    respRelease["EX_LocationID_Link_RecID"] = idSitio;
-                    Console.WriteLine(respRelease);
-
-                    findRelease release = respRelease.ToObject<findRelease>();
-
-                    return Ok(new { status = StatusCodes.Status200OK, message = "Successed", data = release });
-                }
-
             }
         }
         #endregion
@@ -235,6 +183,46 @@ namespace ERP_ITSM.Controllers
 
             return Ok(new { status = StatusCodes.Status200OK, message = "Successed", data = _service });
 
+        }
+        #endregion
+
+        #region Find Release
+        [HttpPost]
+        [Route("Release")]
+        public async Task<IActionResult> GetRelease([FromBody] GetTicketRequest body)
+        {
+            try
+            {
+                string releaseNum = body?.no_Ticket?.Trim() ?? string.Empty;
+                string recIdRelease = String.Empty;
+
+                if (string.IsNullOrEmpty(releaseNum))
+                {
+                    return BadRequest(new { status = StatusCodes.Status400BadRequest, message = "No Ticket is required", data = "" });
+                }
+
+                #region Valida si Existe el Release
+                string filter = $"ReleaseNumber eq {releaseNum}";
+                string seleccion = "RecId";
+
+                var respRelease = await _services.FilterObj("Release", filter, seleccion);
+
+                if (!respRelease.ContainsKey("RecId"))
+                {
+                    return Ok(new { status = StatusCodes.Status200OK, message = "Ticket (Release) No Existe", data = new { Ticket = releaseNum } });
+                }
+                else
+                {
+                    recIdRelease = respRelease["RecId"].ToString();
+                    return Ok(new { status = StatusCodes.Status200OK, message = "Successed", data = new { recId = recIdRelease } });
+                }
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return Ok(new { status = StatusCodes.Status200OK, message = $"Error: {ex.Message}", data = "{}" });
+            }
         }
         #endregion
 
@@ -472,8 +460,10 @@ namespace ERP_ITSM.Controllers
                 SetValuesModels(_contrato, body);
                 _contrato.EX_CustID_Link = custID;
                 _contrato.Name = contrato;
+                
                 JObject newCnt = JObject.FromObject(_contrato);
 
+                //newCnt["ivnt_ExpiryDate"] = Utilities.UTC6_UTC( newCnt["ivnt_ExpiryDate"]!.ToString() );
                 newCnt.Remove("EX_CustID_Link_RecID");
                 newCnt.Remove("EX_TipoContrato_Link_RecID");
 
@@ -749,6 +739,7 @@ namespace ERP_ITSM.Controllers
                     newObject.Remove("Name");
                     newObject.Remove("EX_CustID_Link");
                     newObject["ivnt_AssetLocation"] = recIdLOC;
+                    newObject["ivnt_ExpiryDate"] = Utilities.UTC6_UTC(newObject["ivnt_ExpiryDate"].ToString());
 
                     objName = "Contract";
                     break;
@@ -788,6 +779,176 @@ namespace ERP_ITSM.Controllers
             };
 
         }
+
+        #region Find Closed Release
+        [HttpPost]
+        [Route("GetClosedRelease")]
+        public async Task<IActionResult> GetClosedRelease()
+        {
+            try
+            {
+                string filter = "Status eq 'Closed' and EX_TipoRelease eq 'Nuevo Sitio'";
+                string seleccion = "RecId, ReleaseNumber, ClosedDateTime, Status";
+
+                // Primero probar sin paginación para ver el comportamiento
+                var respRelease = await _services.FilterObj("Release", $"{filter}&$top=100", seleccion, "lst");
+                var odataResponse = JsonConvert.DeserializeObject<ODataClosedRelease<ClosedRelease>>(respRelease.ToString());
+
+                Console.WriteLine($"Respuesta inicial: {odataResponse.Value?.Count} registros de {odataResponse.Count} totales");
+
+                // Si ya tenemos todos los registros, devolver directamente
+                if (odataResponse.Value?.Count >= odataResponse.Count)
+                {
+                    return Ok(new
+                    {
+                        status = StatusCodes.Status200OK,
+                        message = "Successed",
+                        data = new
+                        {
+                            totalRecords = odataResponse.Count,
+                            closedRelease = odataResponse.Value,
+                        }
+                    });
+                }
+
+                // Si no, implementar paginación
+                var paginatedFilter = new List<ClosedRelease>();
+                paginatedFilter.AddRange(odataResponse.Value);
+
+                int pageSize = 100; // Maximo permitido por Ivanti
+                int skip = odataResponse.Value.Count;
+                int page = 1;
+
+                while (paginatedFilter.Count < odataResponse.Count) //&& page < 100
+                {
+                    page++;
+                    var newFilter = $"{filter}&$top={pageSize}&$skip={skip}";
+
+                    var pageResponse = await _services.FilterObj("Release", newFilter, seleccion, "lst");
+                    var pageData = JsonConvert.DeserializeObject<ODataClosedRelease<ClosedRelease>>(pageResponse.ToString());
+
+                    if (pageData?.Value != null && pageData.Value.Any())
+                    {
+                        paginatedFilter.AddRange(pageData.Value);
+                        skip += pageData.Value.Count;
+                        Console.WriteLine($"Página {page}: {pageData.Value.Count} registros. Total: {paginatedFilter.Count}");
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                    await Task.Delay(100);
+                }
+
+                return Ok(new
+                {
+                    status = StatusCodes.Status200OK,
+                    message = "Successed",
+                    data = new
+                    {
+                        totalRecords = paginatedFilter.Count,
+                        productionCI = paginatedFilter,
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    status = StatusCodes.Status500InternalServerError,
+                    message = $"Error: {ex.Message}",
+                    data = new { }
+                });
+            }
+        }
+        #endregion
+
+        #region Find Production CI
+        [HttpPost]
+        [Route("GetProductionCI")]
+        public async Task<IActionResult> GetProductionCI()
+        {
+            try
+            {
+                string filter = "Status eq 'Production' and CIType eq 'ivnt_Infrastructure' and ivnt_AssetSubtype ne 'Linea'";
+                string seleccion = "RecId, Model, SerialNumber, EX_IPAddress, EX_IPMonitoreo, EX_Contrato";
+
+                // Primero probar sin paginación para ver el comportamiento
+                var respCI = await _services.FilterObj("CI", $"{filter}&$top=100", seleccion, "lst");
+                var odataResponse = JsonConvert.DeserializeObject<ODataResponse<ProductionCI>>(respCI.ToString());
+
+                Console.WriteLine($"Respuesta inicial: {odataResponse.Value?.Count} registros de {odataResponse.Count} totales");
+
+                // Si ya tenemos todos los registros, devolver directamente
+                if (odataResponse.Value?.Count >= odataResponse.Count)
+                {
+                    return Ok(new
+                    {
+                        status = StatusCodes.Status200OK,
+                        message = "Successed",
+                        data = new
+                        {
+                            productionCI = odataResponse.Value,
+                            totalRecords = odataResponse.Count
+                        }
+                    });
+                }
+
+                // Si no, implementar paginación
+                var paginatedFilter = new List<ProductionCI>();
+                paginatedFilter.AddRange(odataResponse.Value);
+
+                int pageSize = 100; // Maximo permitido por Ivanti
+                int skip = odataResponse.Value.Count;
+                int page = 1;
+
+                while (paginatedFilter.Count < odataResponse.Count) //&& page < 100
+                {
+                    page++;
+                    var newFilter = $"{filter}&$top={pageSize}&$skip={skip}";
+
+                    var pageResponse = await _services.FilterObj("CI", newFilter, seleccion, "lst");
+                    var pageData = JsonConvert.DeserializeObject<ODataResponse<ProductionCI>>(pageResponse.ToString());
+
+                    if (pageData?.Value != null && pageData.Value.Any())
+                    {
+                        paginatedFilter.AddRange(pageData.Value);
+                        skip += pageData.Value.Count;
+                        Console.WriteLine($"Página {page}: {pageData.Value.Count} registros. Total: {paginatedFilter.Count}");
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                    await Task.Delay(100);
+                }
+
+                return Ok(new
+                {
+                    status = StatusCodes.Status200OK,
+                    message = "Successed",
+                    data = new
+                    {
+                        totalRecords = paginatedFilter.Count,
+                        productionCI = paginatedFilter,
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    status = StatusCodes.Status500InternalServerError,
+                    message = $"Error: {ex.Message}",
+                    data = new { }
+                });
+            }
+        }
+        #endregion
     }
 
 }

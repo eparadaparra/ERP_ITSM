@@ -108,6 +108,11 @@ namespace ERP_ITSM.Services
                 string content = await response.Content.ReadAsStringAsync();
                 var respActivity = JsonConvert.DeserializeObject<JObject>(content); // Convertimos a JObject para un mejor manejo
 
+                if (logID == "lst")
+                {
+                    return respActivity;
+                }
+
                 var values = respActivity["value"] as JArray;
 
                 if (values != null && values.Count > 0)

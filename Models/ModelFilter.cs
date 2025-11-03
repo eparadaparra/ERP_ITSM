@@ -14,7 +14,6 @@ namespace ERP_ITSM.Models
     public class GetTicketRequest
     {
         public string no_Ticket { get; set; }
-        public string no_Sitio { get; set; }
     }
     public class GetExternalContactRequest
     {

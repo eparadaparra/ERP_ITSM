@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace ERP_ITSM.Models
 {
@@ -52,5 +53,55 @@ namespace ERP_ITSM.Models
         [JsonPropertyName("EX_LocationID_Link_Category")]
         public string EX_LocationID_Link_Category { get; set; } = "Location";
 
+    }
+    public class ODataClosedRelease<T>
+    {
+        [JsonProperty("@odata.context")]
+        public string Context { get; set; }
+
+        [JsonProperty("@odata.count")]
+        public int Count { get; set; }
+
+        [JsonPropertyName("value")]
+        public List<ClosedRelease> Value { get; set; }
+    }
+    public class ClosedRelease
+    {
+        [JsonPropertyName("RecId")]
+        public string RecId { get; set; }
+
+        [JsonPropertyName("Ticket_Heat")]
+        public long ReleaseNumber { get; set; }
+
+        // Propiedades calculadas para fecha y hora
+        [JsonProperty("FechaCierre")]
+        public string FechaCierre => GetFechaPart();
+
+        [JsonProperty("HoraCierre")]
+        public string HoraCierre => GetHoraPart();
+
+        [JsonPropertyName("Estatus")]
+        public string Status { get; set; }
+
+        [JsonPropertyName("ClosedDateTime")]
+        public string ClosedDateTime { get; set; }
+
+        private string GetFechaPart()
+        {
+            if (DateTimeOffset.TryParse(ClosedDateTime, out var dateTime))
+            {
+                return dateTime.ToString("yyyy-MM-dd");
+            }
+            return string.Empty;
+        }
+
+        private string GetHoraPart()
+        {
+            if (DateTimeOffset.TryParse(ClosedDateTime, out var dateTime))
+            {
+                return dateTime.ToString("HH:mm:ss:fff");
+            }
+            return string.Empty;
+        }
     }
 }
