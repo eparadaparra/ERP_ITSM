@@ -7,8 +7,6 @@ namespace ERP_ITSM.Models
     {
         [JsonPropertyName("ObjectId")]
         public string recId { get; set; }
-        [JsonPropertyName("ObjectName")]
-        public string objParent { get; set; }
     }
     public class GetLinks
     {

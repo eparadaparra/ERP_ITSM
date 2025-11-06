@@ -9,8 +9,8 @@ namespace ERP_ITSM.Services
 
         Task<Object> InsUpdObj(string objeto, Object obj, string metodo = "INS");
 
-        Task<Object> LinkObj(string objParent, string recIdParent, string relationship, string recIdChild);
+        Task<Object> LinkObj(string objParent, string recIdParent, string relationship, string recIdChild, string action = "");
 
-        Task<List<string>> GetLinksObj(string objParent, string recIdParent, string relationship);
+        Task<List<object>> GetLinksObj(string objParent, string recIdParent, string relationship);
     }
 }

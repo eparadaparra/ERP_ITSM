@@ -210,5 +210,21 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ERP_ITSM.Controllers.ERPController",
+    "Method": "DeleteLink",
+    "RelativePath": "api/ERP/UnlinkToRelease",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "ERP_ITSM.Models.LinkReleaseRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

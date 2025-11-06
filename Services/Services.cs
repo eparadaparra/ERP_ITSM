@@ -84,7 +84,7 @@ namespace ERP_ITSM.Services
         {
             _lstLogEvent.Clear();
         }
-        
+
         public async Task<JObject> FilterObj(string objeto, string filtro, string select, string logID = "")
         {
             try
@@ -160,7 +160,7 @@ namespace ERP_ITSM.Services
             {
                 // Enviar via POST
                 var respActivity = await SendToApi(transformedObject, metodo);
-              
+
                 //var values = respActivity["recId"] as JArray;
                 return respActivity;
             }
@@ -178,7 +178,7 @@ namespace ERP_ITSM.Services
                 Encoding.UTF8,
                 "application/json"
             );
-            var response = await client.PostAsync( String.Concat(_ambiente, uri), stringCcontent);
+            var response = await client.PostAsync(String.Concat(_ambiente, uri), stringCcontent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -188,12 +188,12 @@ namespace ERP_ITSM.Services
 
             var content = await response.Content.ReadAsStringAsync();
             var respActivity = JsonConvert.DeserializeObject(content); // Convertimos a JObject para un mejor manejo
-            
+
             //var values = respActivity["recId"] as JArray;
             return respActivity;
         }
 
-        public async Task<object> LinkObj(string objParent, string recIdParent, string relationship, string recIdChild)
+        public async Task<object> LinkObj(string objParent, string recIdParent, string relationship, string recIdChild, string action)
         {
             HttpClient client = CreateHttpClient();
 
@@ -202,8 +202,18 @@ namespace ERP_ITSM.Services
             queryParams["recIdObj"] = recIdParent;
             queryParams["relation"] = relationship;
             queryParams["recIdRelation"] = recIdChild;
+            HttpResponseMessage response = new HttpResponseMessage();
+            //Console.WriteLine( response.GetType().FullName );
 
-            var response = await client.PatchAsync($"{_ambiente}/api/Obj/Relationships?{queryParams}", null);
+            if (action == "LINK")
+            {
+                response = await client.PatchAsync($"{_ambiente}/api/Obj/Relationships?{queryParams}", null);
+            }
+
+            if (action == "UNLINK")
+            {
+                response = await client.DeleteAsync($"{_ambiente}/api/Obj/Relationships?{queryParams}");
+            }
 
             if (!response.IsSuccessStatusCode)
             {
@@ -218,7 +228,7 @@ namespace ERP_ITSM.Services
             return respActivity;
         }
 
-        public async Task<List<string>> GetLinksObj(string objParent, string recIdParent, string relationship)
+        public async Task<List<object>> GetLinksObj(string objParent, string recIdParent, string relationship)
         {
             HttpClient client = CreateHttpClient();
 
@@ -230,26 +240,27 @@ namespace ERP_ITSM.Services
             var response = await client.GetAsync($"{_ambiente}/api/Obj/Relationships?{queryParams}");
             var content = await response.Content.ReadAsStringAsync();
             var jResponse = JsonConvert.DeserializeObject<GetLinks>(content);
-            var recIdLst = new List<string>();
+            var recIdLst = new List<object>();
 
-            if( jResponse.Value is JArray jArray )
+            if (jResponse.Value is JArray jArray)
             {
                 foreach (var item in jArray)
                 {
-                    string recId = item["RecId"]?.ToString();
-                    if (!string.IsNullOrEmpty(recId))
-                    {
-                        recIdLst.Add(recId);
-                    }
+                    recIdLst.Add(new { 
+                        RecId = item["RecId"]?.ToString(),
+                        Contrato = item["EX_Contrato"]?.ToString(),
+                        SerialNumber = item["SerialNumber"]?.ToString()
+                    });                    
                 }
                 return recIdLst;
             }
-            else 
+            else
             {
                 // Caso sin instancias - lista vacía
                 Console.WriteLine("No se encontraron instancias.");
                 return [];
             }
         }
+
     }
 }

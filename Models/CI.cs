@@ -148,4 +148,12 @@ namespace ERP_ITSM.Models
         [JsonPropertyName("Contrato")]
         public string EX_Contrato { get; set; }
     }
+
+    public class RetiredCI
+    {
+        public string RecId { get; set; }
+        public string Status { get; set; } = "Retired";
+        public int ReadOnly { get; set; } = 0;
+
+    }
 }

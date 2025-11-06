@@ -20,6 +20,7 @@ namespace ERP_ITSM.Controllers
         private CI _ci = new CI();
         private TipoMaterial _tipoMarerial = new TipoMaterial();
         private Service _service = new Service();
+        private RetiredCI _retiredCI = new RetiredCI();
 
         public ERPController(IServices servicesAPI)
         {
@@ -608,20 +609,19 @@ namespace ERP_ITSM.Controllers
         public async Task<IActionResult> GetLink([FromBody] ObjParentLink body)
         {
             string recIdRelease = body?.recId?.Trim() ?? string.Empty;
-            string recIdName = body?.objParent?.Trim() ?? string.Empty;
             string tipo = String.Empty;
-            List<string> links = new List<string>();
+            List<object> links = new List<object>();
 
-            if (string.IsNullOrEmpty(recIdRelease) || string.IsNullOrEmpty(recIdName))
+            if (string.IsNullOrEmpty(recIdRelease) )
             {
-                return BadRequest(new { status = StatusCodes.Status400BadRequest, message = "recId and objName is required", data = "" });
+                return BadRequest(new { status = StatusCodes.Status400BadRequest, message = "recId is required", data = "" });
             } //ReleaseProjectAssocCI
 
             tipo = RelationshipName("RELEASE_CI");
 
-            links = await _services.GetLinksObj(recIdName, recIdRelease, tipo);
+            links = await _services.GetLinksObj("Release", recIdRelease, tipo);
 
-            return Ok(new { status = StatusCodes.Status200OK, message = (links.Count != 0) ? $"{links.Count} CI's asignados" : "No hay CI's asignados", data = links });
+            return Ok(new { status = StatusCodes.Status200OK, message = (links.Count != 0) ? $"{links.Count} CI's Linkeados" : "No hay CI's asignados", data = links });
 
         }
         #endregion
@@ -649,12 +649,8 @@ namespace ERP_ITSM.Controllers
                     return BadRequest(new { status = StatusCodes.Status400BadRequest, message = "recIdRelease and recIdRelationship is required", data = "" });
                 }
 
-                var resp = await _services.LinkObj("Release", recIdRelease, tipo, recIdRelationship);
+                var resp = await _services.LinkObj("Release", recIdRelease, tipo, recIdRelationship, "LINK");
 
-                if (tipo == "RELEASE_CI")
-                {
-                }
-                //Console.WriteLine(resp.GetType());
                 var jResp = JsonConvert.DeserializeObject<Links>(resp.ToString());
 
                 if (jResp.code == "ISM_4000")
@@ -690,6 +686,48 @@ namespace ERP_ITSM.Controllers
             }
         }
         #endregion
+
+        #region UnLink Object to Release
+        [HttpPost]
+        [Route("UnlinkToRelease")]
+        public async Task<IActionResult> DeleteLink([FromBody] LinkReleaseRequest body)
+        {
+            try
+            {
+                string tipo = body?.tipo?.Trim().ToUpper() ?? string.Empty;
+                string recIdRelease = body?.recIdRelease?.Trim() ?? string.Empty;
+                string recIdRelationship = body?.recIdRelationship?.Trim() ?? string.Empty;
+
+                JObject retiredCI = JObject.FromObject(_retiredCI);
+                retiredCI["RecId"] = recIdRelationship;
+
+                tipo = RelationshipName(tipo);
+
+                if (string.IsNullOrEmpty(tipo) || string.IsNullOrEmpty(tipo) || tipo == "SIN_TIPO")
+                {
+                    return BadRequest(new { status = StatusCodes.Status400BadRequest, message = $"\"Tipo\": {tipo} is incorrect", data = "" });
+                }
+
+                if (string.IsNullOrEmpty(recIdRelease) || string.IsNullOrEmpty(recIdRelationship))
+                {
+                    return BadRequest(new { status = StatusCodes.Status400BadRequest, message = "recIdRelease and recIdRelationship is required", data = "" });
+                }
+
+                var resp = await _services.LinkObj("Release", recIdRelease, tipo, recIdRelationship, "UNLINK");
+
+                var jResp = JsonConvert.DeserializeObject<Links>(resp.ToString());
+
+                await _services.InsUpdObj("CI", retiredCI, "UPD");
+
+                return Ok(new { status = StatusCodes.Status200OK, message = jResp.message[0].ToString() });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { status = StatusCodes.Status200OK, message = $"Error: Falló Fnc DeleteLink - {ex.Message}", data = "{}" });
+            }
+        }
+        #endregion
+
 
         private void SetValuesModels(object modelo, object body)
         {
@@ -878,8 +916,7 @@ namespace ERP_ITSM.Controllers
                 // Primero probar sin paginación para ver el comportamiento
                 var respCI = await _services.FilterObj("CI", $"{filter}&$top=100", seleccion, "lst");
                 var odataResponse = JsonConvert.DeserializeObject<ODataResponse<ProductionCI>>(respCI.ToString());
-
-                Console.WriteLine($"Respuesta inicial: {odataResponse.Value?.Count} registros de {odataResponse.Count} totales");
+                //Console.WriteLine($"Respuesta inicial: {odataResponse.Value?.Count} registros de {odataResponse.Count} totales");
 
                 // Si ya tenemos todos los registros, devolver directamente
                 if (odataResponse.Value?.Count >= odataResponse.Count)
@@ -911,12 +948,12 @@ namespace ERP_ITSM.Controllers
 
                     var pageResponse = await _services.FilterObj("CI", newFilter, seleccion, "lst");
                     var pageData = JsonConvert.DeserializeObject<ODataResponse<ProductionCI>>(pageResponse.ToString());
-
+                    
                     if (pageData?.Value != null && pageData.Value.Any())
                     {
                         paginatedFilter.AddRange(pageData.Value);
                         skip += pageData.Value.Count;
-                        Console.WriteLine($"Página {page}: {pageData.Value.Count} registros. Total: {paginatedFilter.Count}");
+                        //Console.WriteLine($"Página {page}: {pageData.Value.Count} registros. Total: {paginatedFilter.Count}");
                     }
                     else
                     {

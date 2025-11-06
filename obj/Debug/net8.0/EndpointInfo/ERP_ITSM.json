@@ -377,6 +377,37 @@
         }
       }
     },
+    "/api/ERP/UnlinkToRelease": {
+      "post": {
+        "tags": [
+          "ERP"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LinkReleaseRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LinkReleaseRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LinkReleaseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/ERP/GetClosedRelease": {
       "post": {
         "tags": [
@@ -661,10 +692,6 @@
         "type": "object",
         "properties": {
           "ObjectId": {
-            "type": "string",
-            "nullable": true
-          },
-          "ObjectName": {
             "type": "string",
             "nullable": true
           }
