@@ -15,7 +15,7 @@ namespace ERP_ITSM.Models
         public string RecId { get; set; }
 
         [JsonPropertyName("EX_TipoRelease")]
-        public string EX_TipoRelease { get; set; } = "Nuevo Sitio";
+        public string EX_TipoRelease { get; set; } = "Nueva implementación";
 
         [JsonPropertyName("EX_CustID_Link_Category")]
         public string EX_CustID_Link_Category { get; set; } = "Account";

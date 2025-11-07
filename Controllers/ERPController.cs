@@ -825,7 +825,7 @@ namespace ERP_ITSM.Controllers
         {
             try
             {
-                string filter = "Status eq 'Closed' and EX_TipoRelease eq 'Nuevo Sitio'";
+                string filter = "Status eq 'Closed' and EX_TipoRelease eq 'Nueva implementación'";
                 string seleccion = "RecId, ReleaseNumber, ClosedDateTime, Status";
 
                 // Primero probar sin paginación para ver el comportamiento
