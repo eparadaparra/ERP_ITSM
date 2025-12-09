@@ -17,6 +17,22 @@
   },
   {
     "ContainingType": "ERP_ITSM.Controllers.ERPController",
+    "Method": "CloneReleaseCIsToMilestone",
+    "RelativePath": "api/ERP/CloneLinks",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "ERP_ITSM.Models.CloneLinkReleaseRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ERP_ITSM.Controllers.ERPController",
     "Method": "GetContact",
     "RelativePath": "api/ERP/ExternalContact",
     "HttpMethod": "POST",

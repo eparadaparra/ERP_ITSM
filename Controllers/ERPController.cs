@@ -1,9 +1,9 @@
-﻿using ERP_ITSM.Custom;
-using ERP_ITSM.Models;
-using ERP_ITSM.Services;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ERP_ITSM.Custom;
+using ERP_ITSM.Models;
+using ERP_ITSM.Services;
 
 namespace ERP_ITSM.Controllers
 {
@@ -461,7 +461,7 @@ namespace ERP_ITSM.Controllers
                 SetValuesModels(_contrato, body);
                 _contrato.EX_CustID_Link = custID;
                 _contrato.Name = contrato;
-                
+
                 JObject newCnt = JObject.FromObject(_contrato);
 
                 //newCnt["ivnt_ExpiryDate"] = Utilities.UTC6_UTC( newCnt["ivnt_ExpiryDate"]!.ToString() );
@@ -559,9 +559,10 @@ namespace ERP_ITSM.Controllers
                 if (respCI.ContainsKey("RecId"))
                 {
                     _ci.RecId = respCI["RecId"].ToString();
+                    _ci.Status = "Deployment in Progress";
 
-                    await _services.LinkObj("CI", _ci.RecId, tipoCNT[0].ToString(), respContract["RecId"]!.ToString());
-                    await _services.LinkObj("CI", _ci.RecId, tipoCNT[1].ToString(), respContract["RecId"]!.ToString());
+                    await _services.LinkObj("CI", _ci.RecId, tipoCNT[0].ToString(), respContract["RecId"]!.ToString(), "LINK");
+                    await _services.LinkObj("CI", _ci.RecId, tipoCNT[1].ToString(), respContract["RecId"]!.ToString(), "LINK");
 
                     SendUpdate(_ci, body!);
 
@@ -588,8 +589,8 @@ namespace ERP_ITSM.Controllers
 
                 string recId = json[0]["CI"]["RecId"].ToString();     //JArray locationsArray = result[""] as JArray;
 
-                await _services.LinkObj("CI", recId, tipoCNT[0].ToString(), respContract["RecId"]!.ToString());
-                await _services.LinkObj("CI", recId, tipoCNT[1].ToString(), respContract["RecId"]!.ToString());
+                await _services.LinkObj("CI", recId, tipoCNT[0].ToString(), respContract["RecId"]!.ToString(), "LINK");
+                await _services.LinkObj("CI", recId, tipoCNT[1].ToString(), respContract["RecId"]!.ToString(), "LINK");
 
                 return Ok(new { status = StatusCodes.Status200OK, message = "Successed", data = new { recId = recId } });
                 #endregion
@@ -612,7 +613,7 @@ namespace ERP_ITSM.Controllers
             string tipo = String.Empty;
             List<object> links = new List<object>();
 
-            if (string.IsNullOrEmpty(recIdRelease) )
+            if (string.IsNullOrEmpty(recIdRelease))
             {
                 return BadRequest(new { status = StatusCodes.Status400BadRequest, message = "recId is required", data = "" });
             } //ReleaseProjectAssocCI
@@ -668,7 +669,7 @@ namespace ERP_ITSM.Controllers
                             {
                                 var tipoMilestone = RelationshipName("RELEASE_MILESTONE");
                                 var recIdMilestone = respMilestone["RecId"].ToString();
-                                await _services.LinkObj("Milestone", recIdMilestone, tipoMilestone, recIdRelationship);
+                                await _services.LinkObj("Milestone", recIdMilestone, tipoMilestone, recIdRelationship, "LINK");
                             }
                         }
                         catch (Exception ex)
@@ -809,6 +810,7 @@ namespace ERP_ITSM.Controllers
             {
                 "CI_CONTRATO" => "EX_CIAssocCIContract".ToUpper(),
                 "CI_CONTRATO2" => "EX_CIAssocCIContract2".ToUpper(),
+                "MILESTONE_CI" => "EX_ReleaseMilestoneAssocCI".ToUpper(),
                 "RELEASE_SITIO" => "EX_ReleaseProjectAssocLocation".ToUpper(),
                 "RELEASE_CI" => "ReleaseProjectAssocCI".ToUpper(),
                 "RELEASE_SERVICE" => "ReleaseProjectAssocCIService".ToUpper(),
@@ -948,7 +950,7 @@ namespace ERP_ITSM.Controllers
 
                     var pageResponse = await _services.FilterObj("CI", newFilter, seleccion, "lst");
                     var pageData = JsonConvert.DeserializeObject<ODataResponse<ProductionCI>>(pageResponse.ToString());
-                    
+
                     if (pageData?.Value != null && pageData.Value.Any())
                     {
                         paginatedFilter.AddRange(pageData.Value);
@@ -986,6 +988,40 @@ namespace ERP_ITSM.Controllers
             }
         }
         #endregion
-    }
+    
+        #region Clone Links de Objetos
+        [HttpPost]
+        [Route("CloneLinks")]
+        public async Task<IActionResult> CloneReleaseCIsToMilestone([FromBody] CloneLinkReleaseRequest body)
+        {
+            string recIdMilestone = body?.recId?.Trim() ?? string.Empty;
+            string recIdRelease = body?.parentRecId?.Trim() ?? string.Empty;
+            string tipoR = RelationshipName("RELEASE_CI");
+            string tipoM = RelationshipName("MILESTONE_CI");
+            List<object> links = new List<object>();
 
+            if (string.IsNullOrEmpty(recIdRelease))
+            {
+                return BadRequest(new { status = StatusCodes.Status400BadRequest, message = "recId is required", data = "" });
+            } //ReleaseProjectAssocCI
+
+
+            links = await _services.GetLinksObj("Release", recIdRelease, tipoR);
+
+            foreach (var link in links)
+            {
+                var linkJObject = JObject.FromObject(link);
+                string recIdCI = linkJObject["RecId"]?.ToString() ?? string.Empty;
+                if (!string.IsNullOrEmpty(recIdCI))
+                {
+                    await _services.LinkObj("Milestone", recIdMilestone, tipoM, recIdCI, "LINK");
+                }
+            }
+
+            return Ok(new { status = StatusCodes.Status200OK, message = (links.Count != 0) ? $"{links.Count} CI's Linkeados" : "No hay CI's asignados", data = links });
+
+        }
+        #endregion
+
+    }
 }

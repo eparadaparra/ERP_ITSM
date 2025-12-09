@@ -99,6 +99,9 @@ namespace ERP_ITSM.Models
         [JsonPropertyName("Status")]
         public string Status { get; set; } = "Deployment in Progress";
 
+        [JsonPropertyName("ReadOnly")]
+        public int ReadOnly { get; set; } = 0;
+
         [JsonPropertyName("EX_Linea")]
         public string EX_Linea { get; set; }
 

@@ -431,6 +431,37 @@
           }
         }
       }
+    },
+    "/api/ERP/CloneLinks": {
+      "post": {
+        "tags": [
+          "ERP"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloneLinkReleaseRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloneLinkReleaseRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloneLinkReleaseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -495,6 +526,24 @@
             "nullable": true
           },
           "Crtd_User": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CloneLinkReleaseRequest": {
+        "required": [
+          "parentRecId",
+          "recId"
+        ],
+        "type": "object",
+        "properties": {
+          "recId": {
+            "type": "string",
+            "nullable": true
+          },
+          "parentRecId": {
             "type": "string",
             "nullable": true
           }
@@ -719,5 +768,10 @@
         "additionalProperties": false
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "ERP"
+    }
+  ]
 }

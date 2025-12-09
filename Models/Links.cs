@@ -24,5 +24,9 @@ namespace ERP_ITSM.Models
         public string help { get; set; }
     }
 
-
+    public class CloneLinkReleaseRequest
+    {
+        public required string recId { get; set; }
+        public required string parentRecId { get; set; }
+    }
 }

@@ -28,10 +28,10 @@ C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\stati
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\ERP_ITSM.csproj.Up2Date
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\ERP_ITSM.dll
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\refint\ERP_ITSM.dll
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\ERP_ITSM.pdb
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\ERP_ITSM.genruntimeconfig.cache
 C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\ref\ERP_ITSM.dll
+C:\Users\elias.parada\OneDrive\Programacion\APIs\ERP_ITSM\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
